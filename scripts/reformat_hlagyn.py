@@ -437,11 +437,10 @@ if __name__ == '__main__':
 
     # reset index
     dfT = dfT.reset_index(drop=True)
-    key_cols = ['lab_id', 'test_id', 'test_kit', 'sample_id', 'country', 'region', 'state', 'DS_UF_SIGLA', 'ADM1_PT', 'ADM1_PCODE', 'location',
-'ADM2_PT', 'ADM2_PCODE', 'lat', 'long', 'DS_NOMEPAD_macsaud', 'CO_MACSAUD', 'date_testing', 'epiweek', 'age', 'sex', 'age_group', 'FLUA_test_result',
-'Ct_FluA', 'FLUB_test_result', 'Ct_FluB', 'VSR_test_result', 'Ct_VSR', 'SC2_test_result', 'Ct_geneE', 'Ct_geneN', 'Ct_geneS', 'Ct_ORF1ab', 'Ct_RDRP',
-'geneS_detection', 'META_test_result', 'RINO_test_result', 'PARA_test_result', 'ADENO_test_result', 'BOCA_test_result', 'COVS_test_result',
-'ENTERO_test_result', 'BAC_test_result']
+    key_cols = ['lab_id', 'test_id', 'test_kit', 'sample_id', 'region', 'state', 'location', 'sex', 'date_testing', 'epiweek',
+                'age','FLUA_test_result', 'Ct_FluA', 'FLUB_test_result', 'Ct_FluB', 'VSR_test_result', 'Ct_VSR','SC2_test_result', 'Ct_geneE',
+                'Ct_geneN', 'Ct_geneS', 'Ct_ORF1ab', 'Ct_RDRP', 'geneS_detection', 'META_test_result', 'RINO_test_result',
+                'PARA_test_result', 'ADENO_test_result', 'BOCA_test_result', 'COVS_test_result', 'ENTERO_test_result', 'BAC_test_result']
 
     for col in dfT.columns.tolist():
         if col not in key_cols:

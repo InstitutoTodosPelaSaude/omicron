@@ -255,6 +255,7 @@ rule detection:
 			--unique-id {params.index_country} \
 			--filter "{params.filters}" \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_country}
 
 		python3 scripts/rows2matrix.py \
@@ -267,6 +268,7 @@ rule detection:
 			--extra-columns {params.extra_columns_macros} \
 			--filter "{params.filters}" \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_macros}
 			
 		python3 scripts/rows2matrix.py \
@@ -279,6 +281,7 @@ rule detection:
 			--extra-columns  {params.extra_columns_states} \
 			--filter "{params.filters}" \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_states}
 			
 		python3 scripts/rows2matrix.py \
@@ -291,6 +294,7 @@ rule detection:
 			--extra-columns  {params.extra_columns_location} \
 			--filter "{params.filters}" \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_location}
 		
 		python3 scripts/rows2matrix.py \
@@ -303,6 +307,7 @@ rule detection:
 			--filter \"{params.filters_notdetected}\" \
 			--time-var {params.time_var} \
 			--start-date {params.start_date2} \
+			--end-date {arguments.target_week} \
 			--output {output.choropleth1}
 
 		python3 scripts/rows2matrix.py \
@@ -315,6 +320,7 @@ rule detection:
 			--filter \"{params.filters_detected}\" \
 			--time-var {params.time_var} \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.choropleth2}
 
 		python3 scripts/rows2matrix.py \
@@ -327,6 +333,7 @@ rule detection:
 			--filter \"{params.filters_notdetected}\" \
 			--time-var {params.time_var} \
 			--start-date {params.start_date2} \
+			--end-date {arguments.target_week} \
 			--output {output.pinpoints1}
 
 		python3 scripts/rows2matrix.py \
@@ -339,6 +346,7 @@ rule detection:
 			--filter \"{params.filters_detected}\" \
 			--time-var {params.time_var} \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.pinpoints2}
 
 		"""
@@ -384,6 +392,7 @@ rule test_results:
 			--unique-id {params.index_country} \
 			--filter \"{params.filters}\" \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_country}
 
 		python3 scripts/rows2matrix.py \
@@ -396,6 +405,7 @@ rule test_results:
 			--filter \"{params.filters}\" \
 			--extra-columns  {params.extra_columns_states} \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_states}
 			
 		python3 scripts/rows2matrix.py \
@@ -408,6 +418,7 @@ rule test_results:
 			--filter \"{params.filters}\" \
 			--extra-columns  {params.extra_columns_location} \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_location}
 		"""
 
@@ -623,6 +634,7 @@ rule all_positives:
 			--unique-id {params.index_country} \
 			--filter "{params.filters}" \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_country}
 
 		python3 scripts/rows2matrix.py \
@@ -635,6 +647,7 @@ rule all_positives:
 			--extra-columns  {params.extra_columns_states} \
 			--filter "{params.filters}" \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_states}
 			
 		python3 scripts/rows2matrix.py \
@@ -647,6 +660,7 @@ rule all_positives:
 			--extra-columns  {params.extra_columns_location} \
 			--filter "{params.filters}" \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_location}
 		"""
 
@@ -693,6 +707,7 @@ rule total_tests:
 			--unique-id {params.index_country} \
 			--filter "{params.filters}" \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_country}
 
 		python3 scripts/rows2matrix.py \
@@ -704,6 +719,7 @@ rule total_tests:
 			--unique-id {params.index_states} \
 			--extra-columns  {params.extra_columns_states} \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--filter "{params.filters}" \
 			--output {output.matrix_states}
 			
@@ -717,6 +733,7 @@ rule total_tests:
 			--extra-columns  {params.extra_columns_location} \
 			--filter "{params.filters}" \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_location}
 
 		python3 scripts/rows2matrix.py \
@@ -727,6 +744,7 @@ rule total_tests:
 			--yvar {params.yvar_country} \
 			--unique-id {params.index_country} \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_country2}
 
 		python3 scripts/rows2matrix.py \
@@ -738,6 +756,7 @@ rule total_tests:
 			--unique-id {params.index_states} \
 			--extra-columns  {params.extra_columns_states} \
 			--start-date {params.start_date} \
+			--end-date {arguments.target_week} \
 			--output {output.matrix_states2}
 
 		"""
@@ -896,7 +915,7 @@ rule stats:
 		counts = "results/counts.txt"
 	shell:
 		"""
-		echo "Test positivity" >> {output.counts}
+		echo "Test positivity" > {output.counts}
 		cut -d$'\t' -f 10 {input.input_file} | grep -v SC2_test_result | sort | uniq -c >> {output.counts}
 
 		echo "\nNumber of states included in the surveillance" >> {output.counts}
