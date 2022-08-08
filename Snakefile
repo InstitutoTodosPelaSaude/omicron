@@ -896,7 +896,7 @@ rule stats:
 		counts = "results/counts.txt"
 	shell:
 		"""
-		echo "Test positivity" > {output.counts}
+		echo "Test positivity" >> {output.counts}
 		cut -d$'\t' -f 10 {input.input_file} | grep -v SC2_test_result | sort | uniq -c >> {output.counts}
 
 		echo "\nNumber of states included in the surveillance" >> {output.counts}
