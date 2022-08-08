@@ -1,0 +1,5 @@
+field	value	hex_color
+S_detection	Detected	#ABABAB
+S_detection	Not detected	#016C59
+test_result	Positive	#F26F61
+test_result	Negative	#577DBD

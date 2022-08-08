@@ -1,0 +1,18 @@
+param	value	note
+input	matrix_states_positivity_week.tsv	# input file
+yvar	DS_UF_SIGLA	# main variable, shown on Y axis
+bins	12	# number of bins in heatmap
+xlabel		# X label
+ylabel		# Y label
+min_value	0	# minimum value
+max_value	0.6	# maximum value
+category_order	AC, AM, AP, PA, RO, TO, AL, BA, CE, MA, PB, PE, PI, RN, SE, DF, GO, MS, MT, ES, MG, RJ, SP, PR, RS, SC	# order of categories listed in 'categories'
+filter	SC2_test_result:Positive, DS_UF_SIGLA:GO, DS_UF_SIGLA:DF, DS_UF_SIGLA:MT, DS_UF_SIGLA:MG, DS_UF_SIGLA:RJ, DS_UF_SIGLA:SP	# comma-separated list of rows to keep or remove rows. Format: '~column_name:value'. Remove '~' to keep only that data category.
+ignore_cols	ADM1_PT, country, SC2_test_result, 2022-08-06	# columns to be ignored in the line plot
+colours	coolwarm	# colours to be assigned to each line
+show_annotations	yes	# yes or no
+label_format	percentage	# Format of the annotations on heatmap cells
+show_legend	yes	# yes or no
+tick_every	3	# frequency of tick in X axis
+figsize	16, 6	# figure size: width and height, in inches
+backend	pdf	# matplotlib backend (recommended: pdf, Qt5Agg). Options: 'GTK3Agg', 'GTK3Cairo', 'GTK4Agg', 'GTK4Cairo', 'MacOSX', 'nbAgg', 'QtAgg', 'QtCairo', 'Qt5Agg', 'Qt5Cairo', 'TkAgg', 'TkCairo', 'WebAgg', 'WX', 'WXAgg', 'WXCairo', 'agg', 'cairo', 'pdf', 'pgf', 'ps', 'svg', 'template'
