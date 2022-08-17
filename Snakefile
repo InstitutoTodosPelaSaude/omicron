@@ -27,7 +27,7 @@ rule arguments:
 		config_lineplot = "/figures/barplot/config_linesgtf.tsv",
 		config_map = "/figures/barplot/config_states_sgtf.tsv",
 		start_date = "2021-12-01",
-		target_week = "2022-07-30"
+		target_week = "2022-08-13"
 
 
 arguments = rules.arguments.params
