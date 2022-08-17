@@ -17,7 +17,7 @@ rule arguments:
 		rename_file = "data/rename_columns.xlsx",
 		correction_file = "data/fix_values.xlsx",
 		cache = "data/combined_testdata.tsv",
-		shapefile = "/Users/Anderson/Documents/scripts/geoCodes/bra_adm_ibge_2020_shp/bra_admbnda_adm2_ibge_2020.shp",
+		shapefile = "config/bra_admbnda_adm2_ibge_2020.shp",
 		coordinates = "config/cache_coordinates.tsv",
 		age_groups = "config/demo_bins.txt",
 		date_column = "date_testing",
