@@ -563,28 +563,28 @@ rule sgtf_percent:
 		matrix_s2 = rules.all.input.sgtf_s2,
 	shell:
 		"""
-		python3 scripts/normdata.py \
+		python3 scripts/matrix_operations.py \
 			--input1 {input.input_c1} \
 			--input2 {input.input_c2} \
 			--index1 {params.index_c1} \
 			--index2 {params.index_c2} \
 			--output {output.matrix_c1}
 
-		python3 scripts/normdata.py \
+		python3 scripts/matrix_operations.py \
 			--input1 {input.input_c3} \
 			--input2 {input.input_c4} \
 			--index1 {params.index_c1} \
 			--index2 {params.index_c2} \
 			--output {output.matrix_c2}
 
-		python3 scripts/normdata.py \
+		python3 scripts/matrix_operations.py \
 			--input1 {input.input_s1} \
 			--input2 {input.input_s2} \
 			--index1 {params.index_s1} \
 			--index2 {params.index_s2} \
 			--output {output.matrix_s1}
 
-		python3 scripts/normdata.py \
+		python3 scripts/matrix_operations.py \
 			--input1 {input.input_s3} \
 			--input2 {input.input_s4} \
 			--index1 {params.index_s1} \
@@ -801,7 +801,7 @@ rule posrate_agegroup:
 			--extra-columns {params.extra} \
 			--output {output.alltests} \
 
-		python3 scripts/normdata.py \
+		python3 scripts/matrix_operations.py \
 			--input1 {output.week_matrix} \
 			--input2 {output.alltests} \
 			--index1 {params.yvar} \
@@ -849,7 +849,7 @@ rule positivity:
 			--format {params.format} \
 			--output {output.matrix_sd}
 
-		python3 scripts/normdata.py \
+		python3 scripts/matrix_operations.py \
 			--input1 {input.input_c1} \
 			--input2 {output.matrix_cd} \
 			--index1 {params.index_c1} \
@@ -857,7 +857,7 @@ rule positivity:
 			--min-denominator {params.min_denom} \
 			--output {output.matrix_c1}
 
-		python3 scripts/normdata.py \
+		python3 scripts/matrix_operations.py \
 			--input1 {input.input_s1} \
 			--input2 {output.matrix_sd} \
 			--index1 {params.index_s1} \
