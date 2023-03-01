@@ -7,8 +7,10 @@ import os.path
 from matplotlib.backends.backend_pdf import PdfPages
 import argparse
 
-# matplotlib.use('Qt5Agg')
-plt.rcParams['font.family'] = 'Arial'
+matplotlib.use('Qt5Agg')
+plt.rcParams['font.family'] = 'Arial' # Mac / win options
+#plt.rcParams['font.family'] = ['Open Sans Light', 'sans-serif'] #linux option
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -235,7 +237,7 @@ if __name__ == '__main__':
         ax.set_xticklabels(ticklabels[::tick_every])
     plt.xticks(ticklabels, rotation=90)
 
-
+    ax.tick_params(axis='both', labelsize=12) #updates the tick_params AFB
 
     show_grid = params.loc['show_grid', 'value']
     if show_grid not in ['', None]:

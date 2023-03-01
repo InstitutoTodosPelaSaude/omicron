@@ -1,5 +1,17 @@
-field	value	hex_color
-S_detection	Not detected	#016C59
-S_detection	Detected	#ABABAB
+field	value	hex_color	shade
+pathogen	FLUA	#1f3d7a	Dark blue
+pathogen	FLUB	#5299e0	Light blue
+pathogen	VSR	#DF4F4F	Red
+pathogen	SC2	#1B8B5B	Dark green
+pathogen	COVS	#40A440	Light green
+pathogen	META	#DD7A98	Pink
+pathogen	RINO	#5F207E	Purple
+pathogen	ENTERO	#9934CB	Light purple
+pathogen	PARA	#8B5711	Brown
+pathogen	BOCA	#CB7834	Orange
+pathogen	ADENO	#40bfbf	Cyan
+pathogen	BAC	#ABABAB	Grey
 test_result	Positive	#F26F61
 test_result	Negative	#577DBD
+geneS_detection	Detected	#ABABAB
+geneS_detection	Not detected	#016C59

@@ -7,8 +7,8 @@ ylabel		# Y label
 min_value	0	# minimum value
 max_value	0.6	# maximum value
 category_order	AC, AM, AP, PA, RO, TO, AL, BA, CE, MA, PB, PE, PI, RN, SE, DF, GO, MS, MT, ES, MG, RJ, SP, PR, RS, SC	# order of categories listed in 'categories'
-filter	SC2_test_result:Positive, DS_UF_SIGLA:GO, DS_UF_SIGLA:DF, DS_UF_SIGLA:MT, DS_UF_SIGLA:MG, DS_UF_SIGLA:RJ, DS_UF_SIGLA:SP	# comma-separated list of rows to keep or remove rows. Format: '~column_name:value'. Remove '~' to keep only that data category.
-ignore_cols	ADM1_PT, country, SC2_test_result, 2022-08-06	# columns to be ignored in the line plot
+filter	SC2_test_result:Positive, DS_UF_SIGLA:DF, DS_UF_SIGLA:GO, DS_UF_SIGLA:MT, DS_UF_SIGLA:MG, DS_UF_SIGLA:RJ, DS_UF_SIGLA:SP	# comma-separated list of rows to keep or remove rows. Format: '~column_name:value'. Remove '~' to keep only that data category. #DS_UF_SIGLA:DF 
+ignore_cols	ADM1_PT, country, SC2_test_result, 2021-12-04, 2021-12-11, 2021-12-18, 2021-12-25	# columns to be ignored in the line plot , 2022-01-01, 2022-01-08, 2022-01-15, 2022-01-22, 2022-01-29, 2022-02-05,2022-02-12, 2022-02-19, 2022-02-26, 2022-03-05, 2022-03-12, 2022-03-19, 2022-03-26, 2022-04-02, 2022-04-09, 2022-04-16, 2022-04-23, 2022-04-30, 2022-11-05
 colours	coolwarm	# colours to be assigned to each line
 show_annotations	yes	# yes or no
 label_format	percentage	# Format of the annotations on heatmap cells
