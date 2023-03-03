@@ -16,8 +16,8 @@ rule arguments:
 		datadir = "data",
 		rename_file = "data/rename_columns.xlsx",
 		correction_file = "data/fix_values.xlsx",
-		cache = "data/combined_testdata.tsv",
-		shapefile = "config/bra_admbnda_adm2_ibge_2020.shp",
+		cache = "data/combined_testdata_3.tsv", #ANTIGO combined_testdata.tsv"
+		shapefile = "config/bra_adm_ibge_2020_shp/bra_admbnda_adm2_ibge_2020.shp",
 		coordinates = "config/cache_coordinates.tsv",
 		age_groups = "config/demo_bins.txt",
 		date_column = "date_testing",
@@ -27,7 +27,7 @@ rule arguments:
 		config_lineplot = "/figures/barplot/config_linesgtf.tsv",
 		config_map = "/figures/barplot/config_states_sgtf.tsv",
 		start_date = "2021-12-01",
-		target_week = "2022-08-13"
+		target_week = "2023-02-25"
 
 
 arguments = rules.arguments.params
@@ -40,22 +40,21 @@ rule reformat_hlagyn:
 		"""
 	input:
 		rename = arguments.rename_file,
-		correction = "data/fix_values.xlsx",
-		cache = arguments.cache
+		correction = arguments.correction_file,
+		cache = arguments.cache,
 	params:
-		datadir = arguments.datadir
+		datadir = arguments.datadir,
 	output:
 		matrix = "results/combined_testdata_1.tsv",
 	shell:
 		"""
-		python3 scripts/reformat_hlagyn.py \
+		python scripts/reformat_hlagyn.py \
 			--datadir {params.datadir} \
 			--rename {input.rename} \
 			--correction {input.correction} \
 			--cache {input.cache} \
 			--output {output.matrix}
 		"""
-
 
 rule reformat_dasa:
 	message:
@@ -64,15 +63,15 @@ rule reformat_dasa:
 		"""
 	input:
 		rename = arguments.rename_file,
-		correction = "data/fix_values.xlsx",
-		cache = rules.reformat_hlagyn.output.matrix
+		correction = arguments.correction_file,
+		cache = rules.reformat_hlagyn.output.matrix # previous lab
 	params:
 		datadir = arguments.datadir
 	output:
 		matrix = "results/combined_testdata_2.tsv",
 	shell:
 		"""
-		python3 scripts/reformat_dasa.py \
+		python scripts/reformat_dasa.py \
 			--datadir {params.datadir} \
 			--rename {input.rename} \
 			--correction {input.correction} \
@@ -88,15 +87,38 @@ rule reformat_db:
 		"""
 	input:
 		rename = arguments.rename_file,
-		correction = "data/fix_values.xlsx",
-		cache = rules.reformat_dasa.output.matrix
+		correction = arguments.correction_file,
+		cache = rules.reformat_dasa.output.matrix, # previous lab
 	params:
-		datadir = arguments.datadir
+		datadir = arguments.datadir,
 	output:
 		matrix = "results/combined_testdata_3.tsv",
 	shell:
 		"""
-		python3 scripts/reformat_db.py \
+		python scripts/reformat_db.py \
+			--datadir {params.datadir} \
+			--rename {input.rename} \
+			--correction {input.correction} \
+			--cache {input.cache} \
+			--output {output.matrix}
+		"""
+
+rule reformat_sabin:
+	message:
+		"""
+		Combine data from SABIN
+		"""
+	input:
+		rename = arguments.rename_file,
+		correction = arguments.correction_file,
+		cache = rules.reformat_db.output.matrix, # last lab
+	params:
+		datadir = arguments.datadir,
+	output:
+		matrix = "results/combined_testdata_labs.tsv" #rules.files.input.combined1, # new combined1_lab or temp("results/combined_sabin.tsv")
+	shell:
+		"""
+		python scripts/reformat_sabin.py \
 			--datadir {params.datadir} \
 			--rename {input.rename} \
 			--correction {input.correction} \
@@ -111,7 +133,7 @@ rule geomatch:
 		Match location names with geographic shapefile polygons
 		"""
 	input:
-		input_file =  rules.reformat_db.output.matrix,
+		input_file =  rules.reformat_sabin.output.matrix, #rules.files.input.combined1,
 		coordinates = arguments.coordinates,
 		shapefile = arguments.shapefile,
 		macros = "config/tabela_municipio_macsaud_estado_regiao.tsv"
@@ -190,7 +212,7 @@ rule demographics:
 			--xvar {params.xvar} \
 			--format {params.format} \
 			--yvar {params.yvar} \
-			--filter ""{params.filters}"" \
+			--filter "{params.filters}" \
 			--unique-id {params.unique_id} \
 			--output {output.age_groups}
 		
@@ -230,7 +252,7 @@ rule detection:
 		xvar2 = "country",
 		extra_cols2 = "ADM1_PT DS_UF_SIGLA",
 		time_var = "date_testing",
-		start_date2 = "2022-05-15",
+		start_date2 = "2022-12-04", # change after new variants across sgtf/sgtp
 		filters_notdetected = "SC2_test_result:Positive, geneS_detection:Not detected, test_kit:thermo",
 		filters_detected = "SC2_test_result:Positive, geneS_detection:Detected, test_kit:thermo",
 		extra_cols3 = "ADM2_PT state DS_UF_SIGLA lat long",
@@ -319,7 +341,7 @@ rule detection:
 			--extra-columns {params.extra_cols2} \
 			--filter \"{params.filters_detected}\" \
 			--time-var {params.time_var} \
-			--start-date {params.start_date} \
+			--start-date {params.start_date2} \
 			--end-date {arguments.target_week} \
 			--output {output.choropleth2}
 
@@ -345,7 +367,7 @@ rule detection:
 			--extra-columns {params.extra_cols3} \
 			--filter \"{params.filters_detected}\" \
 			--time-var {params.time_var} \
-			--start-date {params.start_date} \
+			--start-date {params.start_date2} \
 			--end-date {arguments.target_week} \
 			--output {output.pinpoints2}
 
@@ -563,28 +585,28 @@ rule sgtf_percent:
 		matrix_s2 = rules.all.input.sgtf_s2,
 	shell:
 		"""
-		python3 scripts/matrix_operations.py \
+		python3 scripts/normdata.py \
 			--input1 {input.input_c1} \
 			--input2 {input.input_c2} \
 			--index1 {params.index_c1} \
 			--index2 {params.index_c2} \
 			--output {output.matrix_c1}
 
-		python3 scripts/matrix_operations.py \
+		python3 scripts/normdata.py \
 			--input1 {input.input_c3} \
 			--input2 {input.input_c4} \
 			--index1 {params.index_c1} \
 			--index2 {params.index_c2} \
 			--output {output.matrix_c2}
 
-		python3 scripts/matrix_operations.py \
+		python3 scripts/normdata.py \
 			--input1 {input.input_s1} \
 			--input2 {input.input_s2} \
 			--index1 {params.index_s1} \
 			--index2 {params.index_s2} \
 			--output {output.matrix_s1}
 
-		python3 scripts/matrix_operations.py \
+		python3 scripts/normdata.py \
 			--input1 {input.input_s3} \
 			--input2 {input.input_s4} \
 			--index1 {params.index_s1} \
@@ -801,7 +823,7 @@ rule posrate_agegroup:
 			--extra-columns {params.extra} \
 			--output {output.alltests} \
 
-		python3 scripts/matrix_operations.py \
+		python3 scripts/normdata.py \
 			--input1 {output.week_matrix} \
 			--input2 {output.alltests} \
 			--index1 {params.yvar} \
@@ -849,7 +871,7 @@ rule positivity:
 			--format {params.format} \
 			--output {output.matrix_sd}
 
-		python3 scripts/matrix_operations.py \
+		python3 scripts/normdata.py \
 			--input1 {input.input_c1} \
 			--input2 {output.matrix_cd} \
 			--index1 {params.index_c1} \
@@ -857,7 +879,7 @@ rule positivity:
 			--min-denominator {params.min_denom} \
 			--output {output.matrix_c1}
 
-		python3 scripts/matrix_operations.py \
+		python3 scripts/normdata.py \
 			--input1 {input.input_s1} \
 			--input2 {output.matrix_sd} \
 			--index1 {params.index_s1} \
