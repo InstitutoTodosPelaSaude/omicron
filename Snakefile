@@ -17,7 +17,7 @@ rule arguments:
 		rename_file = "data/rename_columns.xlsx",
 		correction_file = "data/fix_values.xlsx",
 		cache = "data/combined_testdata_3.tsv", #ANTIGO combined_testdata.tsv"
-		shapefile = "config/bra_adm_ibge_2020_shp/bra_admbnda_adm2_ibge_2020.shp",
+		shapefile = "config/ibge_2020_shp/bra_admbnda_adm2_ibge_2020.shp",
 		coordinates = "config/cache_coordinates.tsv",
 		age_groups = "config/demo_bins.txt",
 		date_column = "date_testing",
@@ -27,7 +27,7 @@ rule arguments:
 		config_lineplot = "/figures/barplot/config_linesgtf.tsv",
 		config_map = "/figures/barplot/config_states_sgtf.tsv",
 		start_date = "2021-12-01",
-		target_week = "2023-02-25"
+		target_week = "2023-03-25"
 
 
 arguments = rules.arguments.params
